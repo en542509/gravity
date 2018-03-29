@@ -6,13 +6,14 @@ public class RegularPendulum extends AbstractPendulum {
     private double delta, iterations = 0;
     private double dissipation;
     private double lastTheta, lastVel, lastAccel;
-
+    //public final static GravityConstant GRAVITY = new GravityConstant(9.80665);
+    private GravityConstant g;
     /**
      * Creates a new Pendulum instance 
      */
     public RegularPendulum (double inLength, double inMass, double inTheta0, 
-		     double inDelta, double inDiss) {
-	super (inLength, inMass, inTheta0,GRAVITY);
+		     double inDelta, double inDiss, GravityConstant g) {
+	super (inLength, inMass, inTheta0,g);
 	delta=inDelta;
 	dissipation = inDiss;
 	lastVel = 0;
@@ -21,8 +22,8 @@ public class RegularPendulum extends AbstractPendulum {
     }
 
     public RegularPendulum (double inLength, double inMass, double inTheta0, 
-		     double inDelta) {
-	this (inLength, inMass, inTheta0, inDelta, 0);
+		     double inDelta, GravityConstant g) {
+	this (inLength, inMass, inTheta0, inDelta,0, g);
     }
 
     public void step () {

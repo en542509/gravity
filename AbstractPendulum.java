@@ -10,8 +10,8 @@ public abstract class AbstractPendulum {
      */
     private double stringLength, pointMass;
     protected double theta0; 
-    protected double g; 
     public static final double GRAVITY = 9.80665;
+    protected GravityModel gmodel; 
 
     /**
      * Creates a new Pendulum instance using
@@ -20,7 +20,7 @@ public abstract class AbstractPendulum {
      * inTheta0: angular displacement at t=0 (0<=theta0)
      * inG: gravitational field value to use
      */
-    public AbstractPendulum (double inLength, double inMass, double inTheta0, double inG) {
+    public AbstractPendulum (double inLength, double inMass, double inTheta0, GravityModel inG) {
 	if (validStringLength (inLength)) stringLength = inLength;
 	else throw new IllegalArgumentException ("invalid string length: " + inLength);
 	if (validPointMass(inMass)) pointMass = inMass;
@@ -28,14 +28,14 @@ public abstract class AbstractPendulum {
 	if (validDisplacement (inTheta0)) theta0 = inTheta0;
 	else throw new IllegalArgumentException 
 		 ("invalid angular displacement: " + inTheta0);
-	if (validGC (inG)) g = inG;
+	if (validGC (inG)) gmodel = inG;
 	else throw new IllegalArgumentException ("invalid local gravitational field: " + inG);
     }
 
     private boolean validDisplacement (double val) { return (val >= 0); }
     private boolean validPointMass (double val) { return (val > 0); }
     private boolean validStringLength (double val) { return (val > 0); }
-    private boolean validGC (double val) { return (val >= 0); }
+    private boolean validGC (GravityModel val) { return (val.getGravitationalField() >= 0); }
 
     public double getMaxAngularDisplacement () { return theta0; }
 
@@ -43,6 +43,8 @@ public abstract class AbstractPendulum {
 
     public double getStringLength () { return stringLength; }
 
-    public double getGravitationalField () { return g; }
+    public double getGravitationalField () { return gmodel.getGravitationalField(); }
+    //Allow the GravityModel to be changed dynamically
+    public void changeGravitationalField( GravityModel h) { gmodel = h ;}
 
 }

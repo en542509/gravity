@@ -5,6 +5,8 @@ package A4;
 public class SimplePendulum extends AbstractPendulum {
 
     private double angularFrequency, periodOfMotion;
+    //public final static GravityConstant GRAVITY = new GravityConstant(9.80665);
+    private GravityConstant g;
 
     /**
      * Creates a new Pendulum instance using
@@ -12,8 +14,8 @@ public class SimplePendulum extends AbstractPendulum {
      * inMass: the point mass (>0)
      * inTheta0: angular displacement at t=0 (0<=theta0<=pi/6)
      */
-    public SimplePendulum (double inLength, double inMass, double inTheta0) {
-	super (inLength, inMass, inTheta0,GRAVITY);
+    public SimplePendulum (double inLength, double inMass, double inTheta0,GravityConstant g) {
+    	super(inLength, inMass, inTheta0,g);
 	angularFrequency = Math.sqrt (this.getGravitationalField () / this.getStringLength ());
 	periodOfMotion = 2 * Math.PI 
 	    * Math.sqrt (this.getStringLength () / this.getGravitationalField ());
